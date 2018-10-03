@@ -111,7 +111,7 @@ public class TPModPlugin extends BaseModPlugin {
 		//Let's change the name.
 		asharuTheEntity.setName("New Asharu");
 
-		//So far, we only of Asharu as a SectorEntityToken.
+		//So far, we only know of Asharu as a SectorEntityToken.
 		//That's good enough to change the name, 
 		//but we need to further categorize it as a planet if we want to change its planet attributes.
 		//This is done by casting it as a PlanetAPI.
