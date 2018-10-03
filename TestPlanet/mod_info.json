@@ -1,0 +1,8 @@
+{
+	"id":"testPlanet", # internal id
+	"name":"Test Planet", # displayed to the player
+	"version":"1.0.0",
+	"description":"Test Custom Planet Creation.",
+	"gameVersion":"0.8.1a",
+	"modPlugin":"data.scripts.TPModPlugin"
+}
