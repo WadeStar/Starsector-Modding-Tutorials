@@ -70,28 +70,9 @@ public class TPModPlugin extends BaseModPlugin {
 	}
 
 	private void createSecondTestPlanet() {
-		//Another succinct way to write the initial lines from example 1.
-		//This can cut down the number of import statements as well as the number of lines in your class file.
-		//It may also have performance implications when Java compiles this class.
-		/*
-		StarSystemAPI system = Global.getSector().getStarSystem("Corvus");
-		*/
-		//Note, we don't necessarily need to assign the testPlanet reference but it's very handy in most cases.
-		//For the above, we could have accomplished the same result by simply writing:
-		/*
-		Misc.initConditionMarket(
-			system.addPlanet("testSecondPlanetId", star, "Testia", "lava_minor", 240, 120, 2500, 120)
-		);
-		*/
-		//We can even further combine this logic! 
-		//The above syntax is known as method chaining and it is common in functional programming.
-		//In this case, note we use (ie call) Global.getSector().getStarSystem("Corvus") twice. 
-		/*
-		Misc.initConditionMarket(
-			Global.getSector().getStarSystem("Corvus").addPlanet("testSecondPlanetId", Global.getSector().getStarSystem("Corvus").getStar(), "Testia", "lava_minor", 200, 120, 2500, 120)
-		);
-		*/
-		//This is when it's best to actually assign a reference as we did in Example 1 and use it.
+		//Below is a slightly more succinct way to write the initial lines from example 1.
+		//This can sometimes cut down the number of import statements as well as the number of lines in your class file.
+		//It is known as method chaining and it is common in functional programming.
 		StarSystemAPI system = Global.getSector().getStarSystem("Corvus");
 		Misc.initConditionMarket(
 			system.addPlanet("testSecondPlanetId", system.getStar(), "Testia", "barren", 200, 120, 2500, 120)
