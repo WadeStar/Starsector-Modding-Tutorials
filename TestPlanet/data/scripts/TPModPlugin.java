@@ -63,8 +63,8 @@ public class TPModPlugin extends BaseModPlugin {
 		//--------------------------------------------------
 		//It may be helpful to compartmentalize your logic into different methods/functions.
 		//Many mods already do this to an... unnecessary degree of complexity.
-		//As with all things, moderation in all things is the key to sanity.
-		//Let's do it here for the next example:
+		//Moderation in all things is the key to sanity.
+		//For the next example, let's compartmentalize our second planet in a sub-routine:
 
 		createSecondTestPlanet();
 	}
