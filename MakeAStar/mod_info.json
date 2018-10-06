@@ -1,0 +1,8 @@
+{
+	"id":"makeAStar", # internal id
+	"name":"MakeAStar", # displayed to the player
+	"version":"0.0.1",
+	"description":"Test Custom Star System Creation.",
+	"gameVersion":"0.8.1a",
+	"modPlugin":"data.scripts.MaSModPlugin"
+}
