@@ -56,7 +56,7 @@ public class MaSModPlugin extends BaseModPlugin {
 		
 		//This sets an ambient light color in entire system, affects all entities (planets, stars, etc).
 		//It is not required but can be used to make a spooky effect.
-		//Other times it make look horrible.
+		//Other times it makes things look horrible.
 		//Let's see how this color 0xCC0080 looks. It's my favorite color!
 		system.setLightColor(new Color(0xCC, 0x00, 0x80)); 
 
