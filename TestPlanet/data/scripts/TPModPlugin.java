@@ -10,7 +10,6 @@ import com.fs.starfarer.api.campaign.StarSystemAPI;
 import com.fs.starfarer.api.util.Misc;
 
 //Additionally required for Example 2:
-import com.fs.starfarer.api.SettingsAPI;
 import com.fs.starfarer.api.campaign.PlanetSpecAPI;
 
 /**
