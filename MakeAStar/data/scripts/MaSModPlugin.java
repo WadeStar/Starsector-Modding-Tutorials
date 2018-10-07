@@ -16,6 +16,9 @@ import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.impl.campaign.procgen.StarAge;
 import com.fs.starfarer.api.impl.campaign.procgen.StarSystemGenerator;
 
+import com.fs.starfarer.api.campaign.econ.MarketAPI;
+import com.fs.starfarer.api.impl.campaign.ids.Conditions;
+
 public class MaSModPlugin extends BaseModPlugin {
     @Override
     public void onNewGame() {	
@@ -56,25 +59,61 @@ public class MaSModPlugin extends BaseModPlugin {
 		
 		//This sets an ambient light color in entire system, affects all entities (planets, stars, etc).
 		//It is not required but can be used to make a spooky effect.
-		//Other times it makes things look horrible.
+		//Other times it make look horrible.
 		//Let's see how this color 0xCC0080 looks. It's my favorite color!
 		system.setLightColor(new Color(0xCC, 0x00, 0x80)); 
-
-		//Let's add a hot Jupiter to the system. Simple as can be now.
-		PlanetAPI testPlanet2 = system.addPlanet("test2", star, "Aaarg", "gas_giant", 0, 150, 1200, 25);
-		Misc.initConditionMarket(testPlanet2);
 
 		//Now let's add some random "entities" to the system.
 		//The StarSystemGenerator can do this for us and it will add anything you can imagine:
 		//accretion disks, more planets, moons, asteroids, etc. You never know!
-		StarSystemGenerator.addOrbitingEntities(
+		//This function returns a number representing the outermost orbit of whatever was just added.
+		//This is handy if you want to continue adding stuff to the system in sequential orbits, which we'll do!
+		float outermostOrbitDistance = StarSystemGenerator.addOrbitingEntities(
 			system, 
 			star, 
 			StarAge.AVERAGE, //This setting determines what kind of potential entities are added.
-			2, 4, // min/max entities to add
-			2400, // radius to start adding at 
-			1, // name offset - next planet will be <system name> <roman numeral of this parameter + 1>
+			1, 1, //Min-Max entities to add, here we'll just add 1 entity!
+			1000, //Radius to start adding at. Make sure it's greater than your star's actual radius! You can have planets inside a star otherwise (maybe cool???) 
+			1, //Name offset - next planet will be <system name> <roman numeral of this parameter + 1> if using system-based names.
 			false); // whether to use custom or system-name based names
+
+		//Let's add a hot Jupiter to the system. Simple as can be now.
+		PlanetAPI testPlanet1 = system.addPlanet("test1", star, "Aaarg", "gas_giant", 0, 229, outermostOrbitDistance + 600, 20);
+		Misc.initConditionMarket(testPlanet1);
+		
+		//Right now it has no actual surface conditions.
+		//Surface conditions are technically a subset of market conditions.
+		//This may be unintuitive at first glance, but what this means is even uninhabited planets
+		//necessarily have market conditions.
+		//To add planetary conditions therefore, we create a market.
+		//The market simply never gets beyond being hypothetical.
+		MarketAPI newMarket = Global.getFactory().createMarket("testPlanet1_marketId", testPlanet1.getName(), 0);
+	    newMarket.setPlanetConditionMarketOnly(true); //This "market" only represents planet conditions.
+		newMarket.addCondition(Conditions.VERY_HOT); //It's a hot Jupiter so let's make it hot! 
+		newMarket.addCondition(Conditions.DENSE_ATMOSPHERE); //It's a gas giant, so let's make it gassy!
+		newMarket.setPrimaryEntity(testPlanet1); //Tell the "market" that it's on our planet.
+		testPlanet1.setMarket(newMarket); //Likewise, tell our planet that it has a "market".
+
+		//Here's another example:
+		PlanetAPI testPlanet2 = system.addPlanet("test2", testPlanet1, "Blaarg", "barren", 0, 50, 350, 4);
+		Misc.initConditionMarket(testPlanet2);
+
+		newMarket = Global.getFactory().createMarket("testPlanet2_marketId", testPlanet2.getName(), 0);
+	    newMarket.setPlanetConditionMarketOnly(true);
+		newMarket.addCondition(Conditions.THIN_ATMOSPHERE); //This will be discover upon initial survey.
+		newMarket.addCondition(Conditions.ORE_SPARSE); //This will be discovered upon completing a planet survey!
+		newMarket.setPrimaryEntity(testPlanet2);
+		testPlanet2.setMarket(newMarket);
+		
+		//Once more let's add some random entities.
+		StarSystemGenerator.addOrbitingEntities(
+			system, 
+			star, 
+			StarAge.OLD, //Let's try old system entities this time.
+			0, 2, //Let's allow for the possibility of no new entities after Aaarg.
+			testPlanet1.getCircularOrbitRadius() + 600, //Here we grab Aaarg's orbit radius to figure out where to start adding from.
+			system.getPlanets().size(), //Let's start naming planets based off the number of planets already in this location.
+			false); // Again, let's use generic planet names.
 
 		//Finally, to make the star appear correctly in the game it is necessary to add hyperspace points.
 		//This is the easiest way to handle it.
