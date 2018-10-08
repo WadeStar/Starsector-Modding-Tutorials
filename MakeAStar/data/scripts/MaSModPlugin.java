@@ -89,7 +89,7 @@ public class MaSModPlugin extends BaseModPlugin {
 		//To add planetary conditions therefore, we create a market.
 		//The market simply never gets beyond being hypothetical.
 		MarketAPI newMarket = Global.getFactory().createMarket("testPlanet1_marketId", testPlanet1.getName(), 0);
-	    newMarket.setPlanetConditionMarketOnly(true); //This "market" only represents planet conditions.
+		newMarket.setPlanetConditionMarketOnly(true); //This "market" only represents planet conditions.
 		newMarket.addCondition(Conditions.VERY_HOT); //It's a hot Jupiter so let's make it hot! 
 		newMarket.addCondition(Conditions.DENSE_ATMOSPHERE); //It's a gas giant, so let's make it gassy!
 		newMarket.setPrimaryEntity(testPlanet1); //Tell the "market" that it's on our planet.
@@ -100,7 +100,7 @@ public class MaSModPlugin extends BaseModPlugin {
 		Misc.initConditionMarket(testPlanet2);
 
 		newMarket = Global.getFactory().createMarket("testPlanet2_marketId", testPlanet2.getName(), 0);
-	    newMarket.setPlanetConditionMarketOnly(true);
+		newMarket.setPlanetConditionMarketOnly(true);
 		newMarket.addCondition(Conditions.THIN_ATMOSPHERE); //This will be discover upon initial survey.
 		newMarket.addCondition(Conditions.ORE_SPARSE); //This will be discovered upon completing a planet survey!
 		newMarket.setPrimaryEntity(testPlanet2);
