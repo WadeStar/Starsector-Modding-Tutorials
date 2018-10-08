@@ -73,7 +73,8 @@ public class MaSModPlugin extends BaseModPlugin {
 			star, 
 			StarAge.AVERAGE, //This setting determines what kind of potential entities are added.
 			1, 1, //Min-Max entities to add, here we'll just add 1 entity!
-			1000, //Radius to start adding at. Make sure it's greater than your star's actual radius! You can have planets inside a star otherwise (maybe cool???) 
+			1000, //Radius to start adding at. Make sure it's greater than your star's actual radius! 
+				//You can have planets inside a star otherwise (maybe cool???) 
 			1, //Name offset - next planet will be <system name> <roman numeral of this parameter + 1> if using system-based names.
 			false); // whether to use custom or system-name based names
 
