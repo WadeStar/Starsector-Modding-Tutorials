@@ -57,7 +57,7 @@ public class MaSModPlugin extends BaseModPlugin {
 		
 		//This sets an ambient light color in entire system, affects all entities (planets, stars, etc).
 		//It is not required but can be used to make a spooky effect.
-		//Other times it make look horrible.
+		//Other times it makes things look horrible.
 		//Let's see how this color 0xCC0080 looks. It's my favorite color!
 		//0xCC0080 is a combined color in RGB hexadecimal notation.
 		//We need to provide each red, green, and blue value separately so it becomes: 
@@ -88,7 +88,7 @@ public class MaSModPlugin extends BaseModPlugin {
 		//To add planetary conditions therefore, we create a market.
 		//The market simply never gets beyond being hypothetical.
 		MarketAPI newMarket = Global.getFactory().createMarket("testPlanet1_marketId", testPlanet1.getName(), 0);
-	    newMarket.setPlanetConditionMarketOnly(true); //This "market" only represents planet conditions.
+		newMarket.setPlanetConditionMarketOnly(true); //This "market" only represents planet conditions.
 		newMarket.addCondition(Conditions.VERY_HOT); //It's a hot Jupiter so let's make it hot! 
 		newMarket.addCondition(Conditions.DENSE_ATMOSPHERE); //It's a gas giant, so let's make it gassy!
 		newMarket.setPrimaryEntity(testPlanet1); //Tell the "market" that it's on our planet.
@@ -99,7 +99,7 @@ public class MaSModPlugin extends BaseModPlugin {
 		Misc.initConditionMarket(testPlanet2);
 
 		newMarket = Global.getFactory().createMarket("testPlanet2_marketId", testPlanet2.getName(), 0);
-	    newMarket.setPlanetConditionMarketOnly(true);
+		newMarket.setPlanetConditionMarketOnly(true);
 		newMarket.addCondition(Conditions.THIN_ATMOSPHERE); //This will be discover upon initial survey.
 		newMarket.addCondition(Conditions.ORE_SPARSE); //This will be discovered upon completing a planet survey!
 		newMarket.setPrimaryEntity(testPlanet2);
