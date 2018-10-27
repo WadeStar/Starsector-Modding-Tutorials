@@ -1,0 +1,5 @@
+id,type,text1,text2,text3,notes
+mas_star,CUSTOM,This star has a special place in the sector.,,,
+mas_arg,CUSTOM,"This is a planet.
+It is happy. 
+(This is how you insert a carriage return/new line in CSV. Be careful as some editors may not display the carriage return or they may replace it.)","Blaarg, the Happy Planet",This is what you see when you approach the planet. It's definitely a planet.,

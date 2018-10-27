@@ -41,26 +41,26 @@ public class MaSModPlugin extends BaseModPlugin {
 		//    type, //You can refer to com.fs.starfarer.api.impl.campaign.ids.StarTypes or 
 		//		use the actual values found in
 		//		\Starsector\starsector-core\data\config\planets.json
-		//    float radius, //The rest are pretty obvious!
-		//    float hyperspaceLocationX, 
-		//    float hyperspaceLocationY, 
-		//    float coronaSize) // corona radius, from star edge
+		//    radius, //The rest are pretty obvious!
+		//    hyperspaceLocationX, 
+		//    hyperspaceLocationY, 
+		//    coronaSize) // corona radius, from star edge
 		
-		//We append the "f" to the end of these numbers to help tell Java that the numbers
-		//are "floating point numbers" (ie numbers that can have a decimal point).
-		//It has no special meaning other than that.
 		PlanetAPI star = system.initStar(
 			"wadestar", 
 			"star_orange", 
-			500f, 
-			-400f, 
-			-9400f, 
+			500, 
+			-400, 
+			-9400, 
 			250); 
+		
 		
 		//This sets an ambient light color in entire system, affects all entities (planets, stars, etc).
 		//It is not required but can be used to make a spooky effect.
-		//Other times it makes things look horrible.
+		//Other times it make look horrible.
 		//Let's see how this color 0xCC0080 looks. It's my favorite color!
+		//0xCC0080 is a combined color in RGB hexadecimal notation.
+		//We need to provide each red, green, and blue value separately so it becomes: 
 		system.setLightColor(new Color(0xCC, 0x00, 0x80)); 
 
 		//Now let's add some random "entities" to the system.
@@ -73,8 +73,7 @@ public class MaSModPlugin extends BaseModPlugin {
 			star, 
 			StarAge.AVERAGE, //This setting determines what kind of potential entities are added.
 			1, 1, //Min-Max entities to add, here we'll just add 1 entity!
-			1000, //Radius to start adding at. Make sure it's greater than your star's actual radius! 
-				//You can have planets inside a star otherwise (maybe cool???) 
+			1000, //Radius to start adding at. Make sure it's greater than your star's actual radius! You can have planets inside a star otherwise (maybe cool???) 
 			1, //Name offset - next planet will be <system name> <roman numeral of this parameter + 1> if using system-based names.
 			false); // whether to use custom or system-name based names
 
@@ -89,7 +88,7 @@ public class MaSModPlugin extends BaseModPlugin {
 		//To add planetary conditions therefore, we create a market.
 		//The market simply never gets beyond being hypothetical.
 		MarketAPI newMarket = Global.getFactory().createMarket("testPlanet1_marketId", testPlanet1.getName(), 0);
-		newMarket.setPlanetConditionMarketOnly(true); //This "market" only represents planet conditions.
+	    newMarket.setPlanetConditionMarketOnly(true); //This "market" only represents planet conditions.
 		newMarket.addCondition(Conditions.VERY_HOT); //It's a hot Jupiter so let's make it hot! 
 		newMarket.addCondition(Conditions.DENSE_ATMOSPHERE); //It's a gas giant, so let's make it gassy!
 		newMarket.setPrimaryEntity(testPlanet1); //Tell the "market" that it's on our planet.
@@ -100,7 +99,7 @@ public class MaSModPlugin extends BaseModPlugin {
 		Misc.initConditionMarket(testPlanet2);
 
 		newMarket = Global.getFactory().createMarket("testPlanet2_marketId", testPlanet2.getName(), 0);
-		newMarket.setPlanetConditionMarketOnly(true);
+	    newMarket.setPlanetConditionMarketOnly(true);
 		newMarket.addCondition(Conditions.THIN_ATMOSPHERE); //This will be discover upon initial survey.
 		newMarket.addCondition(Conditions.ORE_SPARSE); //This will be discovered upon completing a planet survey!
 		newMarket.setPrimaryEntity(testPlanet2);
@@ -116,7 +115,7 @@ public class MaSModPlugin extends BaseModPlugin {
 			system.getPlanets().size(), //Let's start naming planets based off the number of planets already in this location.
 			false); // Again, let's use generic planet names.
 
-		//Finally, to make the star appear correctly in the game it is necessary to add hyperspace points.
+		//To make the star appear correctly in the game it is necessary to add hyperspace points.
 		//This is the easiest way to handle it.
 		//In this case we want to make sure we add a fringe jump point or else no one will be able to leave 
 		//our star system without a transverse jump! So the second "true" is kind of important.
@@ -124,5 +123,29 @@ public class MaSModPlugin extends BaseModPlugin {
 		//	boolean generateEntrancesAtGasGiants, //Create jump point at our gas giants?
 		//	boolean generateFringeJumpPoint) //Create a jump point at the edge of the system?
 		system.autogenerateHyperspaceJumpPoints(true, true);
+
+		//Finally, as an added bonus let's examine how to add custom descriptions to our star system.
+		//The game provides defaults based on the planet and star types we used above.
+		//But we can customize them!
+		//Unfortunatley, this means we need to add the custom strings in a separate .csv file.
+		//This file is in: ../data/string/descriptions.csv
+		//(ie /Starsector/mods/MakeAStar/data/string/descriptions.csv)
+		//The .csv has 6 columns and can be edited with any text editor.
+		//The first column is the id, which we supply below.
+		star.setCustomDescriptionId("mas_star");
+		//We can use the same description more than once!
+		testPlanet1.setCustomDescriptionId("mas_star");
+		//This is a separate description with a different id.
+		testPlanet2.setCustomDescriptionId("mas_arg");
+		//The second column is the type, which is CUSTOM.
+		//Any id that is used with setCustomDescriptionId needs to have the type CUSTOM.
+		//The third column is "text1", which for our planets and stars is the main description.
+		//This is the most important description to set.
+		//The forth column is "text2", which is a title show when a player puts the mouse over the planet or star.
+		//This is optional and will override the more generic title the game provides by default.
+		//The fifth column is "text3", which is a description show when the player approachs the planet or star.
+		
+		//The .csv file contains an example of how to use carriage returns for formatting paragraphs.
+		//Use carriage returns with caution. It is very easy to mess up your .csv file if you get it wrong.
     }
 }
