@@ -1,0 +1,8 @@
+{
+	"id":"makeAMarket", # internal id
+	"name":"Make A Market", # displayed to the player
+	"version":"1.0.0",
+	"description":"Test Custom Market Creation.",
+	"gameVersion":"0.9.1a",
+	"modPlugin":"data.scripts.MaMModPlugin"
+}
